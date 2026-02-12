@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antico Capon - Luxury Boutique Hotel Venice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            background: #0a0a0a;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 60px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: #d4af37;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            color: #0a0a0a;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            animation: subtle-zoom 30s ease-in-out infinite;
+        }
+
+        @keyframes subtle-zoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            letter-spacing: 6px;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .hero-title {
+            font-size: 90px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 22px;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+            color: #e5e5e5;
+            font-weight: 300;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, #d4af37);
+            margin: 0 auto 10px;
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 60px;
+            position: relative;
+        }
+
+        .section-light {
+            background: #f8f8f8;
+        }
+
+        .section-dark {
+            background: #1a1a1a;
+            color: #f5f5f5;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #d4af37;
+            letter-spacing: 3px;
+            margin-bottom: 80px;
+            text-transform: uppercase;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 30px;
+            color: #d4af37;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .feature-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Rooms Showcase */
+        .rooms-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .room-card {
+            position: relative;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .room-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.4s ease;
+        }
+
+        .room-card:nth-child(1) .room-image {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                              url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80');
+        }
+
+        .room-card:nth-child(2) .room-image {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                              url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80');
+        }
+
+        .room-card:nth-child(3) .room-image {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                              url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80');
+        }
+
+        .room-card:hover .room-image {
+            transform: scale(1.1);
+        }
+
+        .room-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+        }
+
+        .room-name {
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .room-price {
+            font-size: 20px;
+            color: #d4af37;
+            letter-spacing: 1px;
+        }
+
+        /* Location */
+        .location-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .location-text h3 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #d4af37;
+            letter-spacing: 2px;
+        }
+
+        .location-text p {
+            font-size: 18px;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .location-features {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .location-features li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .location-features li::before {
+            content: '✦';
+            color: #d4af37;
+            margin-right: 15px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            text-align: center;
+            padding: 150px 60px;
+        }
+
+        .cta-title {
+            font-size: 60px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+
+        .cta-text {
+            font-size: 20px;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn-primary {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            color: #0a0a0a;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: #f5f5f5;
+            padding: 18px 50px;
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            color: #f5f5f5;
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-section h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: 15px;
+            line-height: 2;
+            color: rgba(245, 245, 245, 0.8);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #d4af37;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 14px;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 50px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .location-content {
+                grid-template-columns: 1fr;
+            }
+
+            .rooms-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="logo">Antico Capon</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#rooms">Camere</a></li>
+            <li><a href="#services">Servizi</a></li>
+            <li><a href="#location">Location</a></li>
+            <li><a href="#contact">Contatti</a></li>
+        </ul>
+        <button class="book-btn">Prenota Ora</button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">Luxury Boutique Hotel</div>
+            <h1 class="hero-title">ANTICO CAPON</h1>
+            <p class="hero-description">
+                Un'esperienza veneziana senza pari nel cuore del sestiere Dorsoduro. 
+                Eleganza, raffinatezza e tradizione si incontrano.
+            </p>
+            <button class="book-btn" style="font-size: 16px; padding: 18px 50px;">Scopri di Più</button>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section class="section-dark" id="services">
+        <h2 class="section-title">Esperienze Esclusive</h2>
+        <p class="section-subtitle">Il lusso nei dettagli</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏛️</div>
+                <h3 class="feature-title">Location Storica</h3>
+                <p class="feature-desc">Nel cuore di Campo Santa Margherita, circondati dalla storia e dalla cultura veneziana più autentica.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Design Raffinato</h3>
+                <p class="feature-desc">Arredi di pregio con pavimenti originali in terrazzo veneziano e dettagli d'epoca accuratamente restaurati.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Connettività Premium</h3>
+                <p class="feature-desc">WiFi ad alta velocità in tutte le aree, per restare connessi con il mondo mentre vi immergete nella Venezia autentica.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h3 class="feature-title">Cultura & Arte</h3>
+                <p class="feature-desc">A pochi passi dalla Basilica dei Frari e dalla Scuola Grande di San Rocco, tesori dell'arte veneziana.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛎️</div>
+                <h3 class="feature-title">Servizio Concierge</h3>
+                <p class="feature-desc">Assistenza personalizzata 24/7 tramite WhatsApp per ogni vostra esigenza durante il soggiorno.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚤</div>
+                <h3 class="feature-title">Transfer Privato</h3>
+                <p class="feature-desc">Servizio di trasporto esclusivo da/per l'aeroporto Marco Polo e vaporetto privato su richiesta.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light" id="rooms">
+        <h2 class="section-title" style="color: #1a1a1a;">Le Nostre Suite</h2>
+        <p class="section-subtitle" style="color: #1a1a1a;">Eleganza e comfort senza compromessi</p>
+        <div class="rooms-showcase">
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-overlay">
+                    <h3 class="room-name">Suite Deluxe Doppia</h3>
+                    <p class="room-price">Da €280 / notte</p>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-overlay">
+                    <h3 class="room-name">Suite Tripla Premium</h3>
+                    <p class="room-price">Da €380 / notte</p>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-overlay">
+                    <h3 class="room-name">Junior Suite Panoramica</h3>
+                    <p class="room-price">Da €220 / notte</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <h2 class="section-title">Galleria</h2>
+        <p class="section-subtitle">Scopri i nostri ambienti esclusivi</p>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Lobby">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Reception & Lobby</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80" alt="Camera">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Camera Deluxe</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80" alt="Bagno">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Bagno Suite</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80" alt="Vista">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Vista Campo</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" alt="Dettagli">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Dettagli d'Epoca</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1535827841776-24afc1e255ac?w=800&q=80" alt="Venezia">
+                <div class="gallery-overlay">
+                    <p style="font-size: 20px; letter-spacing: 2px;">Campo S. Margherita</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark" id="location">
+        <h2 class="section-title">Una Posizione Privilegiata</h2>
+        <p class="section-subtitle">Nel cuore pulsante di Venezia</p>
+        <div class="location-content">
+            <div class="location-text">
+                <h3>Dorsoduro, Campo Santa Margherita</h3>
+                <p>
+                    Situato nella vivace piazza di Campo Santa Margherita, il nostro hotel 
+                    offre un'esperienza autentica nel sestiere più affascinante di Venezia.
+                </p>
+                <p>
+                    Circondati da ristoranti raffinati, caffè storici e gallerie d'arte, 
+                    sarete immersi nella vera essenza veneziana.
+                </p>
+                <ul class="location-features">
+                    <li>Basilica dei Frari - 5 minuti a piedi</li>
+                    <li>Ponte di Rialto - 15 minuti a piedi</li>
+                    <li>Piazza San Marco - 10 minuti in vaporetto</li>
+                    <li>Stazione San Tomà - 8 minuti a piedi</li>
+                    <li>Aeroporto Marco Polo - 25 minuti in taxi acqueo</li>
+                </ul>
+            </div>
+            <div>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2799.8726358944743!2d12.321614476892453!3d45.43434547107419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477eb1d0b8e6c3ab%3A0x3c6e0c0e0c0e0c0e!2sCampo%20Santa%20Margherita%2C%203004%2C%2030123%20Venezia%20VE%2C%20Italy!5e0!3m2!1sen!2sit!4v1234567890123!5m2!1sen!2sit"
+                    width="100%" 
+                    height="500" 
+                    style="border:0; border-radius: 15px;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <h2 class="cta-title">Inizia la Tua Esperienza Veneziana</h2>
+        <p class="cta-text">
+            Prenotando direttamente con noi, garantiamo il miglior prezzo disponibile 
+            e vantaggi esclusivi. Il vostro soggiorno da sogno a Venezia inizia qui.
+        </p>
+        <div class="cta-buttons">
+            <button class="cta-btn-primary">Prenota Ora</button>
+            <button class="cta-btn-secondary">Richiedi Informazioni</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Antico Capon</h4>
+                <p>Luxury Boutique Hotel</p>
+                <p>Dorsoduro 3004/B</p>
+                <p>30123 Venezia, Italia</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contatti</h4>
+                <a href="tel:+390415285292">+39 041 528 5292</a>
+                <a href="mailto:info@anticocapon.com">info@anticocapon.com</a>
+                <a href="#">Chat WhatsApp</a>
+            </div>
+            <div class="footer-section">
+                <h4>Informazioni</h4>
+                <a href="#">Servizi</a>
+                <a href="#">Condizioni</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Seguici</h4>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">TripAdvisor</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Hotel Antico Capon. Tutti i diritti riservati. | Luxury Boutique Hotel Venice
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
